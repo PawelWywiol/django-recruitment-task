@@ -22,6 +22,12 @@ Run migrations:
 uv run manage.py migrate
 ```
 
+Create a superuser:
+
+```bash
+uv run manage.py createsuperuser
+```
+
 Run the development server:
 
 ```bash
