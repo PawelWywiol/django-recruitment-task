@@ -1,0 +1,26 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.ruff_cache
+
+# Virtual environments
+.venv
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# VSCode settings
+.vscode/
+
+# macOS
+.DS_Store
+
+# dotenv environment variables file
+.env
+.env.local
