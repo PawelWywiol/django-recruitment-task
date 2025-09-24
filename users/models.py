@@ -19,6 +19,8 @@ class User(models.Model):
 
     class Meta:
         db_table = "users"
+        verbose_name = "User"
+        verbose_name_plural = "Users"
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name} ({self.email})"
@@ -45,6 +47,8 @@ class UserAddress(models.Model):
     class Meta:
         db_table = "users_addresses"
         unique_together = ("user", "address_type", "valid_from")
+        verbose_name = "User Address"
+        verbose_name_plural = "User Addresses"
 
     def __str__(self) -> str:
         return f"{self.user.email} - {self.address_type} ({self.street} {self.building_number})"
