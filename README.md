@@ -49,12 +49,12 @@ docker compose up
 1. ~~The UI should only include what's required in task's description. There is no need to build authentication, menus or any features besides what's required.~~
 2. ~~The UI should consist of:~~
 
-- ~~A paginated users' list. Add a mocked button to **Create** a new user above the list and in each record, a context menu with mocked **Edit** and **Delete** buttons.~~
-- ~~A paginated users' addresses list. The list should be visible after clicking a user record in the users' list.~~
-- ~~In the addresses list, include a context menu where you can **Edit** and **Delete** an address record.~~
-- ~~Add the ability to **Create** a new user address.~~
-- ~~**Create** and **Edit** forms should be implemented in modals.~~
-- ~~When inputting address fields, display a preview of the full address in the realtime in the following format:~~
+-   ~~A paginated users' list. Add a mocked button to **Create** a new user above the list and in each record, a context menu with mocked **Edit** and **Delete** buttons.~~
+-   ~~A paginated users' addresses list. The list should be visible after clicking a user record in the users' list.~~
+-   ~~In the addresses list, include a context menu where you can **Edit** and **Delete** an address record.~~
+-   ~~Add the ability to **Create** a new user address.~~
+-   ~~**Create** and **Edit** forms should be implemented in modals.~~
+-   ~~When inputting address fields, display a preview of the full address in the realtime in the following format:~~
 
 ```
 <street> <building_number>
