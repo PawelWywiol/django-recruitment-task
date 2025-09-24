@@ -1,40 +1,104 @@
 ## Django Recruitment Task
 
-This repository is a Django version of the [NextJS recruitment task](https://github.com/PawelWywiol/nextjs-recruitment-task). It implements a simple application to manage users' addresses, similar to the NextJS version.
+```
+! Work in Progress !
+```
 
-## Setup Instructions
+This repository is a Django version of the [NextJS recruitment task](https://github.com/PawelWywiol/nextjs-recruitment-task). It implements a complete REST API for managing users and their addresses with Django REST Framework.
 
-Copy the `.env.example` file to `.env` and set your environment variables:
+## Features
+
+- **REST API** with full CRUD operations for users and addresses
+- **Swagger/OpenAPI documentation** at `/api/`
+- **Django Admin interface** for easy data management
+- **PostgreSQL/SQLite database support**
+- **Modern Python tooling** with uv package manager
+- **Code quality** with Ruff linting and formatting
+
+## API Endpoints
+
+- **GET/POST** `/api/users/` - List/create users
+- **GET/PUT/PATCH/DELETE** `/api/users/{id}/` - User operations
+- **Swagger UI** `/api/` - Interactive API documentation
+- **Django Admin** `/admin/` - Administrative interface
+
+## Development Commands
+
+Environment setup
 
 ```bash
 cp .env.example .env
-```
-
-Install dependencies and set up the virtual environment:
-
-```bash
 uv venv
 source .venv/bin/activate
 uv sync
 ```
 
-Run migrations:
+Database operations
 
 ```bash
 uv run manage.py migrate
-```
-
-Create a superuser:
-
-```bash
 uv run manage.py createsuperuser
 ```
 
-Run the development server:
+Development server
 
 ```bash
 uv run manage.py runserver
 ```
+
+Code quality
+
+```bash
+ruff check .
+ruff format .
+```
+
+Django management
+
+```bash
+uv run manage.py makemigrations
+uv run manage.py shell
+```
+
+## Architecture Overview
+
+This Django recruitment task implements a user address management system with PostgreSQL backend. The application is designed to be modular and extensible for future CRUD components.
+
+## API Usage
+
+### List Users
+```bash
+curl http://localhost:8000/api/users/
+```
+
+### Create User
+```bash
+curl -X POST http://localhost:8000/api/users/ \
+  -H "Content-Type: application/json" \
+  -d '{"first_name": "John", "last_name": "Doe", "email": "john@example.com", "status": "ACTIVE"}'
+```
+
+### Access Documentation
+- **Swagger UI**: http://localhost:8000/api/
+- **Django Admin**: http://localhost:8000/admin/
+
+### Key Architectural Decisions
+
+#### Modern Python Tooling
+- Uses `uv` instead of pip for faster dependency management
+- Modern `pyproject.toml` configuration
+- Comprehensive Ruff configuration with 120 character line length and all linting rules enabled except documentation
+
+#### API-First Design
+- Swagger/OpenAPI documentation configured via drf-yasg
+- API documentation available at `/api/` (Swagger UI) and `/redoc/`
+- Django REST Framework ready for API implementation
+
+#### Database Design Patterns
+- Composite primary keys for address versioning
+- CASCADE delete for address cleanup when users are removed
+- Proper model choices for status and address types
+- Automatic timestamp management
 
 ## Task
 
