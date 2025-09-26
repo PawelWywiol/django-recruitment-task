@@ -1,144 +1,243 @@
-## Django Recruitment Task
+# Django Recruitment Task
 
 ```
 ! Work in Progress !
 ```
 
-This repository is a Django version of the [NextJS recruitment task](https://github.com/PawelWywiol/nextjs-recruitment-task). It implements a complete REST API for managing users and their addresses with Django REST Framework.
+This repository is a Django version of the [NextJS recruitment task](https://github.com/PawelWywiol/nextjs-recruitment-task). It implements a complete REST API for managing users and their addresses using Django REST Framework. It provides a robust backend solution with comprehensive API documentation, health monitoring, and modern development tooling.
 
 ## Features
 
-- **REST API** with full CRUD operations for users and addresses
-- **Swagger/OpenAPI documentation** at `/api/`
-- **Django Admin interface** for easy data management
-- **PostgreSQL/SQLite database support**
-- **Modern Python tooling** with uv package manager
-- **Code quality** with Ruff linting and formatting
+- **Complete REST API** with full CRUD operations for users and addresses
+- **Health Check Endpoint** for monitoring application status
+- **Swagger/OpenAPI Documentation** with interactive UI
+- **Django Admin Interface** for data management
+- **Comprehensive Test Suite** with CRUD functionality tests
+- **PostgreSQL/SQLite Database Support**
+- **Modern Python Tooling** with uv package manager
+- **Code Quality Tools** with Ruff linting and formatting
 
-## API Endpoints
+## Quick Start
 
-- **GET/POST** `/api/users/` - List/create users
-- **GET/PUT/PATCH/DELETE** `/api/users/{id}/` - User operations
-- **Swagger UI** `/api/` - Interactive API documentation
-- **Django Admin** `/admin/` - Administrative interface
-
-## Development Commands
-
-Environment setup
+### Environment Setup
 
 ```bash
+# Copy environment configuration
 cp .env.example .env
+
+# Create virtual environment and install dependencies
 uv venv
 source .venv/bin/activate
 uv sync
 ```
 
-Database operations
+### Database Setup
 
 ```bash
-uv run manage.py migrate
-uv run manage.py createsuperuser
+# Run database migrations
+uv run python manage.py migrate
+
+# Create superuser account (optional)
+uv run python manage.py createsuperuser
 ```
 
-Development server
+### Development Server
 
 ```bash
-uv run manage.py runserver
+# Start development server
+uv run python manage.py runserver
+
+# Access the application
+# API Documentation: http://localhost:8000/api/
+# Django Admin: http://localhost:8000/admin/
+# Health Check: http://localhost:8000/health/
 ```
 
-Code quality
+## API Endpoints
+
+### User Management
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/users/` | List all users (paginated) |
+| `POST` | `/api/users/` | Create a new user |
+| `GET` | `/api/users/{id}/` | Retrieve specific user with addresses |
+| `PUT` | `/api/users/{id}/` | Update user (full update) |
+| `PATCH` | `/api/users/{id}/` | Partially update user |
+| `DELETE` | `/api/users/{id}/` | Delete user and all addresses |
+
+### User Address Management
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/users/{id}/address/` | List addresses for specific user |
+| `POST` | `/api/users/{id}/address/` | Create new address for user |
+| `GET` | `/api/users/{id}/address/{address_id}/` | Retrieve specific address |
+| `PUT` | `/api/users/{id}/address/{address_id}/` | Update address (full update) |
+| `PATCH` | `/api/users/{id}/address/{address_id}/` | Partially update address |
+| `DELETE` | `/api/users/{id}/address/{address_id}/` | Delete address |
+
+### System Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/health/` | Application health check |
+| `GET` | `/api/` | Swagger UI documentation |
+| `GET` | `/redoc/` | ReDoc API documentation |
+| `GET` | `/admin/` | Django admin interface |
+
+## Health Check
+
+The health check endpoint (`/health/`) monitors application status and database connectivity:
 
 ```bash
-ruff check .
-ruff format .
+curl http://localhost:8000/health/
 ```
 
-Django management
-
-```bash
-uv run manage.py makemigrations
-uv run manage.py shell
+**Response Format:**
+```json
+{
+  "status": "UP|DOWN",
+  "checks": [
+    {
+      "name": "databaseReady",
+      "status": "UP|DOWN"
+    }
+  ]
+}
 ```
 
-## Architecture Overview
+- Returns **HTTP 200** when healthy
+- Returns **HTTP 503** when unhealthy (database connection issues)
 
-This Django recruitment task implements a user address management system with PostgreSQL backend. The application is designed to be modular and extensible for future CRUD components.
-
-## API Usage
-
-### List Users
-```bash
-curl http://localhost:8000/api/users/
-```
+## API Usage Examples
 
 ### Create User
+
 ```bash
 curl -X POST http://localhost:8000/api/users/ \
   -H "Content-Type: application/json" \
-  -d '{"first_name": "John", "last_name": "Doe", "email": "john@example.com", "status": "ACTIVE"}'
+  -d '{
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john@example.com",
+    "status": "ACTIVE"
+  }'
 ```
 
-### Access Documentation
-- **Swagger UI**: http://localhost:8000/api/
-- **Django Admin**: http://localhost:8000/admin/
-
-### Key Architectural Decisions
-
-#### Modern Python Tooling
-- Uses `uv` instead of pip for faster dependency management
-- Modern `pyproject.toml` configuration
-- Comprehensive Ruff configuration with 120 character line length and all linting rules enabled except documentation
-
-#### API-First Design
-- Swagger/OpenAPI documentation configured via drf-yasg
-- API documentation available at `/api/` (Swagger UI) and `/redoc/`
-- Django REST Framework ready for API implementation
-
-#### Database Design Patterns
-- Composite primary keys for address versioning
-- CASCADE delete for address cleanup when users are removed
-- Proper model choices for status and address types
-- Automatic timestamp management
-
-## Task
-
-Create a NextJS application which allows you to manage users' addresses. The database schema with sample records is provided for you, you can set it up by running:
+### Create User Address
 
 ```bash
-docker compose up
+curl -X POST http://localhost:8000/api/users/1/address/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "address_type": "HOME",
+    "valid_from": "2025-09-26T10:00:00Z",
+    "post_code": "12345",
+    "city": "New York",
+    "country_code": "USA",
+    "street": "Main Street",
+    "building_number": "123"
+  }'
 ```
 
-## ~~UI Requirements~~
+### Update Address
 
-1. ~~The UI should only include what's required in task's description. There is no need to build authentication, menus or any features besides what's required.~~
-2. ~~The UI should consist of:~~
-
--   ~~A paginated users' list. Add a mocked button to **Create** a new user above the list and in each record, a context menu with mocked **Edit** and **Delete** buttons.~~
--   ~~A paginated users' addresses list. The list should be visible after clicking a user record in the users' list.~~
--   ~~In the addresses list, include a context menu where you can **Edit** and **Delete** an address record.~~
--   ~~Add the ability to **Create** a new user address.~~
--   ~~**Create** and **Edit** forms should be implemented in modals.~~
--   ~~When inputting address fields, display a preview of the full address in the realtime in the following format:~~
-
-```
-<street> <building_number>
-<post_code> <city>
-<country_code>
+```bash
+curl -X PATCH http://localhost:8000/api/users/1/address/1/ \
+  -H "Content-Type: application/json" \
+  -d '{"city": "Updated City"}'
 ```
 
-3. ~~You may use any UI library: MUI, AntD, etc.~~
-4. ~~Handle data validation errors coming from the server.~~
+## Testing
 
-## Server Requirements
+### Run Tests
 
-1. Use the database schema provided. Do not modify it.
-2. ~~Implement ["Server Actions"](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations) which the frontend should use to interact with the database.~~
-3. You may use any ORM or Query Builder.
-4. Introduce simple data validation. Nothing fancy, you can use constraints from the database schema. Country codes use ISO3166-1 alpha-3 standard.
+```bash
+# Run all tests
+uv run python manage.py test
 
-## General Requirements
+# Run specific app tests
+uv run python manage.py test users
 
-1. Expect the application to eventually include many similar CRUD components (i.e. "users_tasks", "users_permissions", etc.), make your code modular, extensible and generic so that similar modules can be developed with less overhead.
-2. Keep the code clean, scalable, follow known conding conventions, paradigms, patterns, etc.
-3. Use TypeScript.
-4. You do not have to deploy the application, but prepare the codebase for deployment to an environment of your choice.
+# Run with verbose output
+uv run python manage.py test --verbosity=2
+
+# Run with coverage (if coverage is installed)
+coverage run --source='.' manage.py test
+coverage report
+```
+
+### Test Coverage
+
+The test suite includes:
+- **User CRUD Operations**: Create, read, update, delete users
+- **Address CRUD Operations**: Manage user addresses with proper relationships
+- **Validation Testing**: Email uniqueness, required fields
+- **API Response Testing**: Status codes, response formats
+- **Database Relationship Testing**: Foreign key constraints, cascading deletes
+
+## Code Quality
+
+### Linting and Formatting
+
+```bash
+# Check code quality
+ruff check .
+
+# Fix auto-fixable issues
+ruff check . --fix
+
+# Format code
+ruff format .
+
+# Check specific files
+ruff check users/models.py
+```
+
+## Project Structure
+
+```
+├── app/                    # Main Django project configuration
+│   ├── settings.py        # Django settings
+│   ├── urls.py           # Root URL configuration
+│   ├── views.py          # Application-level views (health check)
+│   └── wsgi.py           # WSGI application
+├── users/                 # Users app
+│   ├── models.py         # User and UserAddress models
+│   ├── serializers.py    # DRF serializers
+│   ├── views.py          # API views and ViewSets
+│   ├── urls.py           # App URL configuration
+│   ├── admin.py          # Django admin configuration
+│   └── tests.py          # Test suite
+├── docker/               # Docker configuration
+├── pyproject.toml        # Project dependencies and configuration
+├── manage.py            # Django management script
+└── README.md            # This file
+```
+
+## Architecture Decisions
+
+### API-First Design
+- Swagger/OpenAPI documentation automatically generated
+- RESTful endpoint design with proper HTTP methods
+- Consistent error handling and validation
+- Nested resources for logical data relationships
+
+### Modern Python Tooling
+- **uv** for fast dependency management
+- **Ruff** for linting and formatting (120 char line length)
+- **Type hints** throughout the codebase
+- **pyproject.toml** for modern project configuration
+
+### Database Design
+- Proper foreign key relationships with CASCADE deletes
+- Unique constraints for business logic
+- Choice fields for controlled vocabularies
+- Automatic timestamp management
+
+### Scalability Considerations
+- Modular app structure for easy extension
+- Generic ViewSets for consistent CRUD patterns
+- Proper database indexing on foreign keys
+- Pagination support for large datasets
