@@ -40,7 +40,7 @@ target-version = "py39"
 [lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
 select = ['ALL']
-ignore = ['D']
+ignore = ['D', 'PT009']
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
