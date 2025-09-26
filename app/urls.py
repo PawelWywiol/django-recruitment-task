@@ -25,11 +25,11 @@ from .views import health_check
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Django Recruitment Task API",
+        title="Django Rest API",
         default_version="v1",
-        description="API documentation for the Django Recruitment Task project",
-        terms_of_service="https://github.com/PawelWywiol/django-recruitment-task",
-        contact=openapi.Contact(email="django-recruitment-task@webdev.style"),
+        description="API documentation for the Django Rest API project",
+        terms_of_service="https://github.com/PawelWywiol/poc-django-rest-api",
+        contact=openapi.Contact(email="poc-django-rest-api@webdev.style"),
         license=openapi.License(name="MIT License"),
     ),
     public=True,

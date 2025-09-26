@@ -1,10 +1,10 @@
-# Django Recruitment Task
+# (POC) Django REST API
 
 ```
 ! Work in Progress !
 ```
 
-This repository is a Django version of the [NextJS recruitment task](https://github.com/PawelWywiol/nextjs-recruitment-task). It implements a complete REST API for managing users and their addresses using Django REST Framework. It provides a robust backend solution with comprehensive API documentation, health monitoring, and modern development tooling.
+This repository is a Proof of Concept (POC) for a Django REST API. It implements a complete REST API for managing users and their addresses using Django REST Framework. It provides a robust backend solution with comprehensive API documentation, health monitoring, and modern development tooling.
 
 ## Features
 
