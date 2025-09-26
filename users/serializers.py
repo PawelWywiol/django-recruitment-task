@@ -10,6 +10,7 @@ class UserAddressSerializer(serializers.ModelSerializer):
         model = UserAddress
         fields: ClassVar[list[str]] = [
             "id",
+            "user",
             "address_type",
             "valid_from",
             "post_code",
@@ -20,7 +21,7 @@ class UserAddressSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
-        read_only_fields: ClassVar[list[str]] = ["id", "created_at", "updated_at"]
+        read_only_fields: ClassVar[list[str]] = ["id", "user", "created_at", "updated_at"]
 
 
 class UserSerializer(serializers.ModelSerializer):
